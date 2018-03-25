@@ -207,9 +207,21 @@ namespace Bezier
                     Undo.RecordObject(spline, "Add Control Point");
                     EditorUtility.SetDirty(spline);
                     lastPoint = new ControlPoint(hitPoint);
-                    
-                    if (spline.GetControlPointCount() > 0 && ((Vector3)spline.GetControlPoint(0) - hitPoint).sqrMagnitude < 0.5f)
-                        lastPoint = spline.GetControlPoint(0);
+
+                    if (spline.GetControlPointCount() > 0)
+                    {
+                        Vector3 p = spline.GetControlPoint(0);
+                        Vector3 rayToP = (p - ray.origin);
+                        float angle = Mathf.Deg2Rad * Vector3.Angle(rayToP.normalized, ray.direction);
+                        float dist = Mathf.Sin(angle) * rayToP.magnitude;
+
+                        if (spline.GetControlPointCount() > 0 && dist < 0.2f)
+                            lastPoint = spline.GetControlPoint(0);
+
+                        addPointMode = false;
+                        ResetTools();
+                        SceneView.RepaintAll();
+                    }
 
                     spline.AddControlPoint(lastPoint);
                 }
