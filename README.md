@@ -24,7 +24,7 @@ Adding this component to an object snaps it to a spline.
 * <b>Speed</b> - Optional.  Specifies the speed at which this object moves along the spline in play mode.  0 holds the object in place.
 * <b>Look Forward</b> - If true, rotates the object as it moves along the spline.  False preserves the object's initial rotation.
 
-##<b>Spline Prefab Generator</b>
+## Spline Prefab Generator
 
 Adding this component to an object generates prefabs along a spline.
 
