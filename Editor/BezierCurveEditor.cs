@@ -63,10 +63,15 @@ namespace Bezier
             if (addPointMode && !spline.IsLoop())
                 GUI.backgroundColor = selectedColour;
 
-            if (spline.IsLoop())
-                GUI.enabled = false;
+            string addTooltip = "Click to begin adding control points to the end of your spline";
 
-            if (GUILayout.Button(new GUIContent("Add Control Point", "Click to begin adding control points to the end of your spline")))
+            if (spline.IsLoop())
+            {
+                GUI.enabled = false;
+                addTooltip = "Cannot add any more control points once the spline is cyclical";
+            }
+
+            if (GUILayout.Button(new GUIContent("Add Control Point", addTooltip)))
             {
                 addPointMode = !addPointMode;
                 insertPointMode = false;
@@ -89,8 +94,16 @@ namespace Bezier
 
             if (insertPointMode)
                 GUI.backgroundColor = selectedColour;
+            
+            string insertTooltip = "Click to begin adding control points to your existing spline";
 
-            if (GUILayout.Button(new GUIContent("Insert Control Point", "Click to begin adding control points to your existing spline")))
+            if (spline.GetControlPointCount() < 2)
+            {
+                GUI.enabled = false;
+                insertTooltip = "Requires two or more control points";
+            }
+
+            if (GUILayout.Button(new GUIContent("Insert Control Point", insertTooltip)))
             {
                 addPointMode = false;
                 insertPointMode = !insertPointMode;
@@ -103,6 +116,9 @@ namespace Bezier
 
                 SceneView.RepaintAll();
             }
+            
+            if (spline.GetControlPointCount() < 2)
+                GUI.enabled = true;
             #endregion
 
             EditorGUILayout.EndHorizontal();

@@ -68,6 +68,8 @@ namespace Bezier
 
         private void Update()
         {
+            if (!spline) return;
+
             currDist = (currDist + speed * Time.deltaTime) % spline.GetTotalLength();
             MoveAlongSpline(currDist);
         }
