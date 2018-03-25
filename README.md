@@ -9,7 +9,7 @@ You will see four buttons in the Inspector:
 * <b>Delete control point</b> - Deletes whatever control point you left-click on in the scene view.
 * <b>Clear control points</b> - Deletes your entire spline, but leaves a bare component.
 
-To edit control points or tangents, left click a handle in the scene view to access a move gizmo.  You can link or break tangents in the Inspector.
+To edit control points or tangents, left click a handle in the scene view to access a move gizmo.  You can link or break tangents in the Inspector.  Dragging after adding or inserting a control point will alter tangents as well.
 
 
 # Additional Features

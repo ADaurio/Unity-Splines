@@ -215,12 +215,13 @@ namespace Bezier
                         float angle = Mathf.Deg2Rad * Vector3.Angle(rayToP.normalized, ray.direction);
                         float dist = Mathf.Sin(angle) * rayToP.magnitude;
 
-                        if (spline.GetControlPointCount() > 0 && dist < 0.2f)
+                        if (dist < 0.2f)
+                        {
                             lastPoint = spline.GetControlPoint(0);
-
-                        addPointMode = false;
-                        ResetTools();
-                        SceneView.RepaintAll();
+                            addPointMode = false;
+                            ResetTools();
+                            SceneView.RepaintAll();
+                        }
                     }
 
                     spline.AddControlPoint(lastPoint);
@@ -234,7 +235,8 @@ namespace Bezier
                     {
                         Undo.RecordObject(spline, "Insert Control Point");
                         EditorUtility.SetDirty(spline);
-                        lastPoint = new ControlPoint(spline.GetPointOnSplineByDistance(dist));
+                        Vector3 localPos = handleTransform.InverseTransformPoint(spline.GetPointOnSplineByDistance(dist));
+                        lastPoint = new ControlPoint(localPos);
                         BezierCurve curve = spline.GetCurveFromDistance(dist, out t);
                         spline.InsertControlPoint(lastPoint, curve);
                     }
